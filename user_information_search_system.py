@@ -13,17 +13,12 @@ def get_user_name():
     while True:
         user_name = input("Enter your name: ")
         user_name = user_name.split()
+        name = (''.join(user_name))
+        if name.isalpha():
+            return name
+        else:
+            print("Enter a valid name")
 
-        name = list(user_name)
-        for parts in name:
-            for part in parts: 
-                if part.isalpha():
-                    try:
-                     return (" ".join(name))
-                    except:
-                     return (user_name[0])
-                else:
-                   print("Please enter a valid name")
             
 def get_user_age():
     while True:
