@@ -10,17 +10,19 @@
 
 # Allows multiple inputs to be included in the name 
 def get_user_name():
-    user_name = input("Enter your name: ")
-    user_name = user_name.split()
+    while True:
+        user_name = input("Enter your name: ")
+        user_name = user_name.split()
 
-    name = list(user_name)
-
-    try:
-        return (" ".join(name))
-
-    except:
-        return (user_name[0])
-
+        name = list(user_name)
+        for parts in name:
+            if parts.isalpha():
+                    try:
+                     return (" ".join(name))
+                    except:
+                     return (user_name[0])
+            else:
+             print("Please enter a valid name")
 
 
 name = get_user_name()
