@@ -6,7 +6,7 @@
 # The user names will be stored in an array as well so that the user can navigate to the different profiles already existed
 # Once the user decided to exit, display the profile of the oldest person logged
 
-
+user_dictionary = {}
 
 # Allows multiple inputs to be included in the name
 # Converts the name to a list to accomodate multiple inputs, then make it a single word so that the .isalpha can be activated
@@ -31,16 +31,34 @@ def get_user_age():
        else:
           print("Please enter a valid age")
 
+# Updates the dictionary according to the user
+def user_dictionary_update():
+    while True:
+        dict_key = input("Input something: ")
+        dict_value = input("Input something again: ")
+        return user_dictionary.update({dict_key: dict_value})
+
 # Sample function for dictionary storing
-user_dictionary = {}
 def main_system():
     name = get_user_name()
     age = get_user_age()
     user_dictionary['name'] = name
     user_dictionary['age'] = age
+
+    while True:
+        ask_user = input("Do you want to add another feature to your dictionary: ")
+        if ask_user == 'q':
+            user_dictionary_update()
+        elif ask_user == 'n':
+            break
+        else:
+            quit
+    
     print(user_dictionary)
 
 main_system()
+
+
 
 
 
