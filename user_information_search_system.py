@@ -25,18 +25,21 @@ def get_user_name():
 # Asks for the user age      
 def get_user_age():
     while True:
-       user_age = int(input("Enter your age: ")) 
-       if user_age > 0:
-          return user_age
-       else:
-          print("Please enter a valid age")
+        try:
+            user_age = int(input("Enter your age: ")) 
+            if user_age > 0:
+                return user_age
+            else:
+                print("Please enter a valid age")
+        except ValueError:
+            print("Enter a numerical input only")
 
 # Updates the dictionary according to the user
 def user_dictionary_update():
     while True:
-        dict_key = input("Input something: ")
-        dict_value = input("Input something again: ")
-        return user_dictionary.update({dict_key: dict_value})
+        dictionary_key = input("Enter a  key: ")
+        dictionary_value = input("Input the value ot the key you provided: ")
+        return user_dictionary.update({dictionary_key: dictionary_value})
 
 # Sample function for dictionary storing
 def main_system():
@@ -46,13 +49,25 @@ def main_system():
     user_dictionary['age'] = age
 
     while True:
-        ask_user = input("Do you want to add another feature to your dictionary: ")
-        if ask_user == 'q':
+        new_feature = input("Do you want to add another feature to your dictionary (press 'y' for proceed, 'n' to exit): ")
+        if new_feature  == 'y':
             user_dictionary_update()
-        elif ask_user == 'n':
+        elif new_feature  == 'n':
             break
         else:
-            quit
+            ("Please respond with 'y' and 'n' only")
+
+    while True:
+        new_user_dictionary = input("Do you want to create a dictionary for another user (type 'y' or 'yes' to proceed, 'n' or 'no' to exit): ")
+        if new_user_dictionary == "y" or new_user_dictionary == "yes":
+            #insert function here. To be ff. after a commit
+        elif new_user_dictionary == "n" or new_user_dictionary == "no":
+            break
+
+        else:
+            print("Enter an input using the characters/words provided")
+
+
     
     print(user_dictionary)
 
