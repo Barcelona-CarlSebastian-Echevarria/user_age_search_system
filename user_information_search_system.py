@@ -6,8 +6,8 @@
 # The user names will be stored in an array as well so that the user can navigate to the different profiles already existed
 # Once the user decided to exit, display the profile of the oldest person logged
 
-user_dictionary = {}
 
+main_list = []
 # Allows multiple inputs to be included in the name
 # Converts the name to a list to accomodate multiple inputs, then make it a single word so that the .isalpha can be activated
 def get_user_name():
@@ -34,44 +34,52 @@ def get_user_age():
         except ValueError:
             print("Enter a numerical input only")
 
-# Updates the dictionary according to the user
-def user_dictionary_update():
-    while True:
-        dictionary_key = input("Enter a  key: ")
-        dictionary_value = input("Input the value ot the key you provided: ")
-        return user_dictionary.update({dictionary_key: dictionary_value})
+# Create an individual user dictionaru
+def create_user_dictionary():
+    name_of_user = get_user_name()
+    age_of_user = get_user_age()
+    user_dictionary = dict(name=name_of_user, age=age_of_user)
+    # Creates a dictionary for the given values
+    return user_dictionary
 
-# Sample function for dictionary storing
-def main_system():
-    name = get_user_name()
-    age = get_user_age()
-    user_dictionary['name'] = name
-    user_dictionary['age'] = age
-
+def add_dictionary_feature():
+    user_dictionary = create_user_dictionary()
     while True:
         new_feature = input("Do you want to add another feature to your dictionary (press 'y' for proceed, 'n' to exit): ")
-        if new_feature  == 'y':
-            user_dictionary_update()
-        elif new_feature  == 'n':
+        if new_feature  == "y" or new_feature == "yes":
+            while True:
+                dictionary_key = input("Enter a  key: ")
+                dictionary_value = input("Input the value ot the key you provided: ")
+                return user_dictionary.update({dictionary_key: dictionary_value})
+        elif new_feature  == "n" or new_feature == "no":
             break
         else:
-            ("Please respond with 'y' and 'n' only")
+            print("Please respond with words/characters specified only")
 
+    return user_dictionary
+    
+def main_system():
+    dictionary_created = add_dictionary_feature()
+    main_list.append(dictionary_created)
     while True:
         new_user_dictionary = input("Do you want to create a dictionary for another user (type 'y' or 'yes' to proceed, 'n' or 'no' to exit): ")
         if new_user_dictionary == "y" or new_user_dictionary == "yes":
-            #insert function here. To be ff. after a commit
+            new = add_dictionary_feature()
+            main_list.append(new)
         elif new_user_dictionary == "n" or new_user_dictionary == "no":
             break
-
         else:
             print("Enter an input using the characters/words provided")
 
+    return main_list
+
+res = main_system()
+print(res)
+
+
 
     
-    print(user_dictionary)
 
-main_system()
 
 
 
