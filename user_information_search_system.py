@@ -1,11 +1,13 @@
 # Ask the user for their name and age. Make room for added input categories if possible. Edit: Make sure that the first letter on each name parts are capitalized
-# Account for the error if the user failed to comply with thr prompt while maintaining the inputs already given
+# Account for the error if the user failed to comply with the prompt while maintaining the inputs already given
 # Store the information into an array for information logging. Each user must have their own storage
 # Give the user an option to add a category and a value if desired
 # Give the user the option to continue with the program or exit
 # The usernames will be stored in an array as well so that the user can navigate to the different profiles already existed
+# Edit: Let the user view the information so far logged and provides option for further edits or proceed to exit
 # Once the user decided to exit, display the profile of the oldest person logged
-# Edit: Add all the information inputted to a csv file
+# Edit: Filter the inputted information to keys name, age and its values to be uploaded in the csv file
+# Edit: Add all the filtered information inputted to a csv file
 import csv
 
 main_list = []
@@ -20,6 +22,7 @@ def get_user_name():
         name = (''.join(user_name))
         letter_count = len(name)
         if name.isalpha() and letter_count >= 2:
+            name = (' '.join(user_name))
             # Makes the first letters of the words capitalized
             name = name.title()
             return name
@@ -57,8 +60,11 @@ def add_dictionary_feature():
             while True:
                 dictionary_key = input("Enter a key: ")
                 dictionary_value = input("Input the value of the key you provided: ")
-                user_dictionary.update({dictionary_key: dictionary_value})
-                break
+                if len(dictionary_value) >= 2 and len(dictionary_key) >= 2:
+                    user_dictionary.update({dictionary_key: dictionary_value})
+                    break
+                else:
+                    print("Please input a value and key that's greate than or equal to two letters (numbers are accepted regardless)")
         elif new_feature == "n" or new_feature == "no":
             break
         else:
@@ -67,15 +73,25 @@ def add_dictionary_feature():
     return user_dictionary
 
 # Uploads the contents in the main list to a csv file
+# The block of code used in this function is sourced from www.geeksforgeeks.org. I just tailored it according to my needs
 def csv_upload():
     file_path = 'user_information_log.csv'
     with open(file_path, 'w', newline='') as csvfile:
         fieldnames = ['name', 'age']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
-        writer.writerows(main_list)
+        
+        # Filter keys name, age and its values, to be uploaded in the file
+        filtered_list = []
+        for items in main_list:
+            filtered_items_dictionary = {}
+            for key in fieldnames:
+                if key in items:
+                    filtered_items_dictionary[key] = items[key]
+            filtered_list.append(filtered_items_dictionary)
+        writer.writerows(filtered_list)
 
-    return "Data uploaded to CSV File successfully"
+    return f"Data uploaded to {file_path} successfully"
 
 # Prints the users with oldest age and shows their profiles at user's choice
 def oldest_age_printer():
