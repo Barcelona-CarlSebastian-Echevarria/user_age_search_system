@@ -3,11 +3,10 @@
 # Store the information into an array for information logging. Each user must have their own storage
 # Give the user an option to add a category and a value if desired
 # Give the user the option to continue with the program or exit
-# The user names will be stored in an array as well so that the user can navigate to the different profiles already existed
+# The usernames will be stored in an array as well so that the user can navigate to the different profiles already existed
 # Once the user decided to exit, display the profile of the oldest person logged
 
 main_list = []
-temporary_dictionary = {}
 number_list = []
 
 # Allows multiple inputs to be included in the name
@@ -40,7 +39,6 @@ def get_user_age():
 def create_user_dictionary():
     name_of_user = get_user_name()
     age_of_user = get_user_age()
-    temporary_dictionary.update({name_of_user: age_of_user})
     number_list.append(age_of_user)
     user_dictionary = dict(name=name_of_user, age=age_of_user)
     # Creates a dictionary for the given values
@@ -65,11 +63,36 @@ def add_dictionary_feature():
 
     return user_dictionary
 
+def oldest_age_printer():
+    profile_information_storage = []
+    print(f"Profile with oldest age:")
+    highest_age = max(number_list)
+    for dictionaries in main_list:
+        if dictionaries["age"] == highest_age:
+            name = dictionaries["name"]
+            age = dictionaries["age"]
+            profile_information_storage.append(dictionaries)
+            print(f'name: {name}, age: {age}')
+
+    while True:
+        profile_viewing = input("View profile?: ")
+        if profile_viewing == 'y':
+                break
+        elif profile_viewing == 'n':
+            quit()
+        else:
+            print("Please respond using the specified")
+
+    for profiles in profile_information_storage:
+        print(profiles)
+
+# Handle all the program functionalities
 def main_system():
     dictionary_created = add_dictionary_feature()
     main_list.append(dictionary_created)
     while True:
-        new_user_dictionary = input("Do you want to create a dictionary for another user (type 'y' or 'yes' to proceed, 'n' or 'no' to exit): ")
+        new_user_dictionary = input(
+            "Do you want to create a dictionary for another user (type 'y' or 'yes' to proceed, 'n' or 'no' to exit): ")
         if new_user_dictionary.lower() == "y" or new_user_dictionary.lower() == "yes":
             new = add_dictionary_feature()
             main_list.append(new)
@@ -84,34 +107,15 @@ def main_system():
             print(main_list)
             to_exit = input("Please press 'n' to exit: ")
             if to_exit == 'n':
+                oldest_age_printer()
                 break
             else:
                 print("please respond using only what's specified")
         elif view_all_profiles.lower() == "n" or view_all_profiles.lower() == "no":
+            oldest_age_printer()
             break
         else:
             print("Enter an input using the characters/words provided")
-
-    print(f"Profile with oldest age:") 
-    highest_age = max(number_list)
-    for key, value in temporary_dictionary.items():
-        if value == highest_age:
-            print(f"{key}: age: {value}")
-
-
-    profile_information_storage = []
-    ask_user = input("View profile?: ")
-    if ask_user == 'y':
-        for dictionaries in main_list:
-            if dictionaries["age"] == highest_age:
-             profile_information_storage.append(dictionaries)
-             break
-    elif ask_user == 'n':
-        quit()
-        
-    print(profile_information_storage)
-
-        
 
 main_system()
 
