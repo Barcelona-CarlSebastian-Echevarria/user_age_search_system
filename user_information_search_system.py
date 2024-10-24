@@ -41,15 +41,14 @@ def create_user_dictionary():
     age_of_user = get_user_age()
     number_list.append(age_of_user)
     user_dictionary = dict(name=name_of_user, age=age_of_user)
-    # Creates a dictionary for the given values
+    # Creates a dictionary for the given inputs
     return user_dictionary
 
 # Adds a new feature to the dictionary
 def add_dictionary_feature():
     user_dictionary = create_user_dictionary()
     while True:
-        new_feature = input(
-            "Do you want to add another feature to your dictionary (type 'y' or 'yes' to proceed, 'n' or 'no' to exit): ")
+        new_feature = input("Do you want to add another feature to your dictionary (type 'y' or 'yes' to proceed, 'n' or 'no' to exit): ")
         if new_feature.lower() == "y" or new_feature.lower() == "yes":
             while True:
                 dictionary_key = input("Enter a  key: ")
@@ -63,6 +62,7 @@ def add_dictionary_feature():
 
     return user_dictionary
 
+# Prints the users with oldest age and shows their profiles at user's choice
 def oldest_age_printer():
     profile_information_storage = []
     print(f"Profile with oldest age:")
@@ -75,10 +75,10 @@ def oldest_age_printer():
             print(f'name: {name}, age: {age}')
 
     while True:
-        profile_viewing = input("View profile?: ")
-        if profile_viewing == 'y':
+        profile_viewing = input("View profile? (type 'y' or 'yes' to proceed, 'n' or 'no' to exit): ")
+        if profile_viewing.lower() == "y" or profile_viewing.lower() == "yes":
                 break
-        elif profile_viewing == 'n':
+        elif profile_viewing.lower() == "n" or profile_viewing.lower() == "no":
             quit()
         else:
             print("Please respond using the specified")
@@ -86,27 +86,38 @@ def oldest_age_printer():
     for profiles in profile_information_storage:
         print(profiles)
 
+# Adds new dictionary to the main list
+def edit_main_list():
+    while True:
+        new_user_dictionary = input("Do you want to create a dictionary for another user (type 'y' or 'yes' to proceed, 'n' or 'no' to exit): ")
+        if new_user_dictionary.lower() == "y" or new_user_dictionary.lower() == "yes":
+            new = add_dictionary_feature()
+            main_list.append(new)
+        elif new_user_dictionary.lower() == "n" or new_user_dictionary.lower() == "no":
+            return None
+        else:
+            print("Enter an input using the characters/words provided")
+
 # Handle all the program functionalities
 def main_system():
     dictionary_created = add_dictionary_feature()
     main_list.append(dictionary_created)
     while True:
-        new_user_dictionary = input(
-            "Do you want to create a dictionary for another user (type 'y' or 'yes' to proceed, 'n' or 'no' to exit): ")
-        if new_user_dictionary.lower() == "y" or new_user_dictionary.lower() == "yes":
-            new = add_dictionary_feature()
-            main_list.append(new)
-        elif new_user_dictionary.lower() == "n" or new_user_dictionary.lower() == "no":
+        appeded_dictionary = edit_main_list()
+        if appeded_dictionary == None:
             break
-        else:
-            print("Enter an input using the characters/words provided")
 
     while True:
         view_all_profiles = input("Before exiting, do you want to see all the profiles you've logged in?: ")
         if view_all_profiles.lower() == "y" or view_all_profiles.lower() == "yes":
             print(main_list)
-            to_exit = input("Please press 'n' to exit: ")
-            if to_exit == 'n':
+            to_exit = input("Please press 'n' to exit or 'e' if you want to add a user profile (This is the last time you can edit): ")
+            if to_exit.lower() == 'e':
+                while True:
+                   final_edit_option = edit_main_list()
+                   if final_edit_option == None:
+                    break
+            elif to_exit.lower() == 'n':
                 oldest_age_printer()
                 break
             else:
