@@ -73,22 +73,23 @@ def add_dictionary_feature():
     return user_dictionary
 
 # Uploads the contents in the main list to a csv file
-# The block of code used in this function is sourced from www.geeksforgeeks.org. I just tailored it according to my needs
 def csv_upload():
+    # The block of code used in this function is sourced from www.geeksforgeeks.org. I just tailored it according to my needs
     file_path = 'user_information_log.csv'
     with open(file_path, 'w', newline='') as csvfile:
         fieldnames = ['name', 'age']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
         
+        # This is my own version of the same block I committed previously. I just want to do this so I can call it my own
         # Filter keys name, age and its values, to be uploaded in the file
         filtered_list = []
         for items in main_list:
-            filtered_items_dictionary = {}
-            for key in fieldnames:
-                if key in items:
-                    filtered_items_dictionary[key] = items[key]
-            filtered_list.append(filtered_items_dictionary)
+            for items in main_list:
+                name_key = items['name']
+                age_key = items['age']
+                dictionary = dict(name= name_key, age= age_key)
+                filtered_list.append(dictionary)
         writer.writerows(filtered_list)
 
     return f"Data uploaded to {file_path} successfully"
@@ -147,8 +148,7 @@ def main_system():
             "Before exiting, do you want to see all the profiles you've logged in? (type 'y' or 'yes' to proceed, 'n' or 'no' to exit): ").lower()
         if view_all_profiles == "y" or view_all_profiles == "yes":
             print(main_list)
-            to_exit = input(
-                "Please press 'n' to exit or 'e' if you want to add a user profile (This is the last time you can edit): ")
+            to_exit = input("Please press 'n' to exit or 'e' if you want to add a user profile (This is the last time you can edit): ")
             if to_exit == 'e':
                 while True:
                     # Provide's the user with option to add a user dictionary while viewing all inputted information
