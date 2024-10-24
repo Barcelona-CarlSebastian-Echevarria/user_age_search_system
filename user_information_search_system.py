@@ -92,10 +92,26 @@ def main_system():
         else:
             print("Enter an input using the characters/words provided")
 
-    oldest_age = max(number_list)
+    print(f"Profile with oldest age:") 
+    highest_age = max(number_list)
     for key, value in temporary_dictionary.items():
-        if value == oldest_age:
-            print(f"Profile with oldest age: name: {key}: age: {value}")
+        if value == highest_age:
+            print(f"{key}: age: {value}")
+
+
+    profile_information_storage = []
+    ask_user = input("View profile?: ")
+    if ask_user == 'y':
+        for dictionaries in main_list:
+            if dictionaries["age"] == highest_age:
+             profile_information_storage.append(dictionaries)
+             break
+    elif ask_user == 'n':
+        quit()
+        
+    print(profile_information_storage)
+
+        
 
 main_system()
 
