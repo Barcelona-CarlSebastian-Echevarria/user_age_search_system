@@ -74,29 +74,27 @@ def add_dictionary_feature():
 
 # Uploads the contents in the main list to a csv file
 def csv_upload():
-    # The block of code used in this function is sourced from www.geeksforgeeks.org. I just tailored it according to my needs
+    # This block of code used in this function is sourced from www.geeksforgeeks.org. I just tailored it according to my needs
     file_path = 'user_information_log.csv'
     with open(file_path, 'w', newline='') as csvfile:
         fieldnames = ['name', 'age']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
         
-        # This is my own version of the same block I committed previously. I just want to do this so I can call it my own
+        # This is my own version of the same block I committed previously. I just want to do this so I can test my abilities and call it my own 
         # Filter keys name, age and its values, to be uploaded in the file
         filtered_list = []
         for items in main_list:
-            for items in main_list:
-                name_key = items['name']
-                age_key = items['age']
-                dictionary = dict(name= name_key, age= age_key)
-                filtered_list.append(dictionary)
+            name_key = items['name']
+            age_key = items['age']
+            dictionary = dict(name= name_key, age= age_key)
+            filtered_list.append(dictionary)
         writer.writerows(filtered_list)
 
     return f"Data uploaded to {file_path} successfully"
 
 # Prints the users with oldest age and shows their profiles at user's choice
 def oldest_age_printer():
-    display_upload_successfully = csv_upload()
     profile_information_storage = []
     print(f"Profile with oldest age:")
     highest_age = max(number_list)
@@ -107,6 +105,7 @@ def oldest_age_printer():
             profile_information_storage.append(dictionaries)
             print(f'Name: {name}, Age: {age}')
 
+    display_upload_successfully = csv_upload()
     print(display_upload_successfully)
 
     while True:
